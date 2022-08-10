@@ -1,4 +1,4 @@
-# Selenium-Automation-Practice
+# Repository name: Selenium-Automation-Practice
 
 # Automation solution with Selenium and Java
 ## _Classes names:_
