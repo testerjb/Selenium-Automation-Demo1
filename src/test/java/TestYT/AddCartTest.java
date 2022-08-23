@@ -99,7 +99,7 @@ public class AddCartTest {
         //Thread.sleep(2000);
         placerOrderModal.getPurchaseButton().click();
 
-        //Thread.sleep(2000);
+        //Thread.sleep(2000); ;
         thankYouPage.getOkButton().click();
 
 
