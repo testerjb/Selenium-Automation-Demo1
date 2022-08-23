@@ -1,7 +1,19 @@
 package Utilities;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
-import java.util.Random;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 
 /* ****************************************************
  * Method with several utilities
@@ -13,6 +25,11 @@ import java.util.Random;
 public class Helper {
 
     WebDriver driver ;
+
+    public Helper(WebDriver driver) {
+        this.driver=driver;
+    }
+
     public String getRandomString() {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
@@ -42,14 +59,42 @@ public class Helper {
     }
 
     //Handles Alerts modals
-    public boolean isAlertPresent() {
-        try {
-            driver.switchTo().alert();
-            return true;
-        }
-        catch (NoAlertPresentException Ex) {
-            return false;
-        }
+    public void noAlertException(String alertText) {
+        new WebDriverWait(driver, Duration.ofSeconds(60)).ignoring(NoAlertPresentException.class)
+                .until(ExpectedConditions.alertIsPresent());
+        Alert alert = driver.switchTo().alert();
+        System.out.println("Alert text : " + alert.getText());
+        alert.accept();
+        Assert.assertEquals(alert.getText(),alertText);
     }
+
+    public String returnFutureYear()   {
+        // create an LocalDate object
+        LocalDate date = LocalDate.now();
+        // add a year
+        LocalDate returnDate = date.plusDays(400);
+        //Split date into year, month, day
+        String stringDate = returnDate.toString();
+        String str[] = stringDate.split("-");
+        //return year
+        return str[0];
+    }
+
+    public boolean assertElementPresent(String xPathCode) {
+        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xPathCode)));
+        return true;
+    }
+
+
+    // main method
+    /*public static void main(String[] args) {
+      copy code for testing methods separately
+    }*/
+
+
 }
+
+
+
 
