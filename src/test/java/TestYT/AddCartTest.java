@@ -1,7 +1,13 @@
 package TestYT;
+import Utilities.Helper;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -10,6 +16,9 @@ import practiceYT.*;
 
 import java.time.Duration;
 
+/*
+ * Note for this test, as we don't have control over database this user will be deleted
+ */
 public class AddCartTest {
     WebDriver driver;
     String pageLink = "https://www.demoblaze.com/index.html";
@@ -26,14 +35,18 @@ public class AddCartTest {
 
     @Test
     public void signInTestcase() throws InterruptedException {
-        //create home page object
+        //create page objects
         HomePage homePage=new HomePage(driver);
-        //create sign in page
         SignInPage signInPage=new SignInPage(driver);
+        Helper helper = new Helper(driver);
+        ThankYouPage thankYouPage= new ThankYouPage(driver);
+
+        //------------------
         AddCartPage addCartPage= new AddCartPage(driver);
         CartPage cartPage= new CartPage(driver);
         NextCartPage nextCartPage = new NextCartPage(driver);
         PlacerOrderModal placerOrderModal= new PlacerOrderModal(driver);
+
         //Login the application
         homePage.getSignIn().click();
         Thread.sleep(1000);
@@ -46,6 +59,7 @@ public class AddCartTest {
         signInPage.getUserName().sendKeys("theCommet");
         signInPage.getPassword().sendKeys("Thequest1!");
         signInPage.getSignInButton().click();
+
         Assert.assertEquals("Welcome theCommet",userName);
 
         Thread.sleep(1000);
@@ -63,21 +77,33 @@ public class AddCartTest {
         homePage.getCart().click();
 
         String productText = cartPage.getProductName().getText();
+        System.out.println("Product Name: " +cartPage.getProductName().getText());
         Assert.assertEquals(selectedItemName,productText);
 
         //click on Place order button
         cartPage.getPlacerOrderButton().click();
 
-        Thread.sleep(1000);
         //forced to click on frame
         j.executeScript("arguments[0].click();", placerOrderModal.getEframe());
 
-        String modalTitle = placerOrderModal.ModalTitle.getText();
-        Assert.assertEquals("Place order",modalTitle );
+        placerOrderModal.getCardHolderName().sendKeys("JillTester");
+        placerOrderModal.getCardHolderCountry().sendKeys("United States");
+        placerOrderModal.getCardHolderCity().sendKeys("New York");
+        placerOrderModal.getCardNumber().sendKeys("378282246310005");
+        placerOrderModal.getCardExpirationMonth().sendKeys("01");
 
-        //close modal
-        j.executeScript("arguments[0].click();", placerOrderModal.getCancelButtonX());
-        System.out.println("Rest of the test to be continued");
+        //get the future year and converts it to string
+        String sYear = helper.returnFutureYear();
+        System.out.println("year > " + sYear);
+        placerOrderModal.getCardExpirationYear().sendKeys(sYear);
+        //Thread.sleep(2000);
+        placerOrderModal.getPurchaseButton().click();
+
+        //Thread.sleep(2000);
+        thankYouPage.getOkButton().click();
+
+
+
     }
 
     @AfterMethod
