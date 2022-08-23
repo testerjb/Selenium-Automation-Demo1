@@ -27,7 +27,7 @@ public class RegisterTest {
     }
 
     @Test
-    public void signInTestcase2() throws InterruptedException {
+    public void registerTest() throws InterruptedException {
         //create page objects
         HomePage homePage = new HomePage(driver);
         RegisterPage registerPage = new RegisterPage(driver);
@@ -54,6 +54,36 @@ public class RegisterTest {
         alert.accept();
     }
 
+
+    /* This test is used in order to test SignInTest since we don't have control over the test database
+     * the user will be deleted eventually by the site admin
+     */
+    //@Test
+    public void createSignInUser(){
+        //create page objects
+        HomePage homePage = new HomePage(driver);
+        RegisterPage registerPage = new RegisterPage(driver);
+        Helper helper = new Helper();
+
+        String inputUser = "theCommet" ;
+        String inputPass = "Thequest1";
+
+        //Click register button
+        homePage.getRegisterLink().click();
+
+        registerPage.getUserName().sendKeys(inputUser);
+        registerPage.getUserPassword().sendKeys(inputPass);
+        System.out.println("user created is : " + inputUser);
+        registerPage.getRegisterButton().click();
+
+        //Waits for alert, using ignoring since the alert cannot be caught
+        new WebDriverWait(driver, Duration.ofSeconds(60)).ignoring(NoAlertPresentException.class)
+                .until(ExpectedConditions.alertIsPresent());
+        Alert alert = driver.switchTo().alert();
+        System.out.println("Alert text : " + alert.getText());
+        Assert.assertEquals(alert.getText(),"Sign up successful.");
+        alert.accept();
+    }
 
     @AfterMethod
     public void tearDown(){

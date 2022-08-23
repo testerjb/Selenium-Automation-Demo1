@@ -10,6 +10,13 @@ import org.testng.annotations.Test;
 import practiceYT.HomePage;
 import practiceYT.SignInPage;
 
+/*
+ * ***********************************************************************************************
+ * Note : as we don't have control over database, this user might be deleted eventually, it's that
+ * is the case, go and run in RegisterTest the test createSignInUser()
+ * ***********************************************************************************************
+ */
+
 public class SignInTest {
     WebDriver driver;
     String pageLink = "https://www.demoblaze.com/index.html";
@@ -27,7 +34,7 @@ public class SignInTest {
     }
 
     @Test
-    public void signInTestcase() throws InterruptedException {
+    public void signInTestcase()  {
         //create page objects
         HomePage homePage=new HomePage(driver);
         SignInPage signInPage=new SignInPage(driver);
