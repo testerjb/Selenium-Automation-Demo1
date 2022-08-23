@@ -1,8 +1,10 @@
 package TestYT;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
+import Utilities.Helper;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -14,40 +16,45 @@ import java.time.Duration;
 public class RegisterTest {
     WebDriver driver;
     String pageLink = "https://www.demoblaze.com/index.html";
-    String userName = "Welcome theCommet";
 
     @BeforeMethod
     public void setUp(){
         System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
         driver=new ChromeDriver();
-
         driver.get(pageLink);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
 
     @Test
-    public void signInTestcase() throws InterruptedException {
-        //create home page object
+    public void signInTestcase2() throws InterruptedException {
+        //create page objects
         HomePage homePage = new HomePage(driver);
-        //create register page
         RegisterPage registerPage = new RegisterPage(driver);
+        Helper helper = new Helper();
 
-        //Login the application
-        homePage.getSignIn().click();
-        Thread.sleep(1000);
-        registerPage.getEFrame().click();
-        registerPage.getUserName().sendKeys("theCommet");
-        registerPage.getEFrame().sendKeys("Thequest1!");
+        String randomNum = helper.randInt();
+        String inputUser = "theCommet" +randomNum;
+        String inputPass = "thedash111";
 
-        //forced to click on sign-in frame
-        JavascriptExecutor j = (JavascriptExecutor) driver;
-        j.executeScript("arguments[0].click();", registerPage.getEFrame());
+        //Click register button
+        homePage.getRegisterLink().click();
 
-        Assert.assertTrue(driver.getCurrentUrl().contains(pageLink));
+        registerPage.getUserName().sendKeys(inputUser);
+        registerPage.getUserPassword().sendKeys(inputPass);
+        System.out.println("User created is :" + inputUser);
+        registerPage.getRegisterButton().click();
 
-        Assert.assertEquals("Welcome theCommet",userName);
+        //Waits for alert, using ignoring since the alert cannot be caught
+        new WebDriverWait(driver, Duration.ofSeconds(60)).ignoring(NoAlertPresentException.class)
+                .until(ExpectedConditions.alertIsPresent());
+        Alert alert = driver.switchTo().alert();
+        System.out.println("Alert text : " + alert.getText());
+        Assert.assertEquals(alert.getText(),"Sign up successful.");
+        alert.accept();
     }
+
+
     @AfterMethod
     public void tearDown(){
         driver.quit();
