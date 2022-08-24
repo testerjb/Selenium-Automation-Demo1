@@ -23,7 +23,6 @@ public class stringReverse {
       }
       reversedString = reversedString + reverseWord + " ";
     }
- 
 	    // Displaying the string after reverse
 	    System.out.print("Reversed string : " + reversedString);
 	  }
