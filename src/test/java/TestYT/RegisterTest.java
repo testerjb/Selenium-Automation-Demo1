@@ -31,7 +31,7 @@ public class RegisterTest {
         //create page objects
         HomePage homePage = new HomePage(driver);
         RegisterPage registerPage = new RegisterPage(driver);
-        Helper helper = new Helper();
+        Helper helper = new Helper(driver);
 
         String randomNum = helper.randInt();
         String inputUser = "theCommet" +randomNum;
@@ -63,7 +63,7 @@ public class RegisterTest {
         //create page objects
         HomePage homePage = new HomePage(driver);
         RegisterPage registerPage = new RegisterPage(driver);
-        Helper helper = new Helper();
+        Helper helper = new Helper(driver);
 
         String inputUser = "theCommet" ;
         String inputPass = "Thequest1";

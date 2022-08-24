@@ -3,16 +3,11 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 
 /* ****************************************************
@@ -20,6 +15,8 @@ import java.util.*;
  * 1. Generate a random string, useful for registration pages FOR unique users and emails
  * 2. Generate a random INT, useful for registration pages FOR unique users and emails
  * 3. Handles Alerts with try/catch
+ * 4. Calculate current date and returns future year
+ *
  * *****************************************************/
 
 public class Helper {
