@@ -1,4 +1,4 @@
-package TestYT;
+package Tests;
 
 import Utilities.Helper;
 import org.openqa.selenium.By;
@@ -10,9 +10,8 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import practiceYT.*;
+import Pages.*;
 
-import javax.swing.plaf.SliderUI;
 import java.time.Duration;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package TestYT;
+package Tests;
 
 import Utilities.Helper;
 import org.openqa.selenium.*;
@@ -9,8 +9,8 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import practiceYT.HomePage;
-import practiceYT.RegisterPage;
+import Pages.HomePage;
+import Pages.RegisterPage;
 import java.time.Duration;
 
 public class RegisterTest {
