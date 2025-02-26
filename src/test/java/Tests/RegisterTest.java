@@ -3,6 +3,7 @@ package Tests;
 import Utilities.Helper;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -19,8 +20,11 @@ public class RegisterTest {
 
     @BeforeMethod
     public void setUp(){
-        System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
-        driver=new ChromeDriver();
+    	System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
+    	ChromeOptions opt = new ChromeOptions();
+    	opt.addArguments("--remote-allow-origins=*");
+    	// Launching the browser    	   	    	        
+        driver=new ChromeDriver(opt);     
         driver.get(pageLink);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
